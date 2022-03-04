@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模版引擎</title>
+    <script src="./lib/template-web.js"></script>
+    <script src="./lib/jquery.js"></script>
+</head>
+
+<body>
+    <div class="ccc"></div>
+    <script type="text/html" id="user">
+        <h1>{{name}}{{age}}{{school}}{{home}}</h1>
+        <div>{{@test}}</div>
+        <div>{{if flag===0}} flag的值为0 {{else if flag===1}} flag的值为1 {{/if}}
+        </div>
+        <ul>
+            {{each hobby}}
+            <li>循环索引是：{{$index}}循环值是：{{$value}}</li>
+            {{/each}}
+        </ul>
+        <h3>{{regTime|dateFormat}}</h3>
+    </script>
+    <script>
+        template.defaults.imports.dateFormat = function(date) {
+            // console.log(data);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            return y + '-' + m + '-' + d
+        }
+        var data = {
+            name: 'csz',
+            age: 12,
+            school: 'nihao',
+            home: 'qd',
+            test: '<h2>测试原文输出</h2>',
+            flag: 1,
+            hobby: [
+                '吃饭',
+                '睡觉',
+                '打豆豆'
+            ],
+            regTime: new Date()
+        }
+        var str = template('user', data);
+        console.log(str);
+        $('.ccc').html(str);
+    </script>
+</body>
+
+</html>
